@@ -45,7 +45,13 @@ public class DoctorService {
 		//return the doctor object
 
 	public Doctor register(Doctor doctor) throws InvalidInputException {
-			if(doctor.getAddress() == null) {
+
+		Optional<Doctor> existingDoctor = Optional.ofNullable(doctorRepository.findByEmailId(doctor.getEmailId()));
+		if (existingDoctor.isPresent()) {
+			throw new InvalidInputException(Collections.singletonList("Doctor with this email already exists"));
+		}
+
+		if(doctor.getAddress() == null) {
 				throw new InvalidInputException(Collections.singletonList("Address is not provided"));
 			}
 

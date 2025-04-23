@@ -13,4 +13,6 @@ public interface DoctorRepository extends CrudRepository<Doctor, String> {
 	List<Doctor> findBySpecialityOrderByRatingDesc(Speciality speciality);
 
 	List<Doctor> findAllByOrderByRatingDesc();
+
+	Doctor findByEmailId(String emailId);
 }
