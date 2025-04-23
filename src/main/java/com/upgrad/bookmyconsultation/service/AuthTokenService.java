@@ -38,7 +38,7 @@ public class AuthTokenService {
 	public UserAuthToken issueToken(final User user) {
 
 		final ZonedDateTime now = DateTimeProvider.currentProgramTime();
-		final UserAuthToken userAuthToken = userAuthDao.findByUserEmailId(user.getEmailId());
+		final UserAuthToken userAuthToken = userAuthDao.findFirstByUserEmailIdOrderByLoginAtDesc(user.getEmailId());
 		final UserAuthTokenVerifier tokenVerifier = new UserAuthTokenVerifier(userAuthToken);
 		if (tokenVerifier.isActive()) {
 			return userAuthToken;

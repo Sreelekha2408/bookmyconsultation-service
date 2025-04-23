@@ -67,7 +67,10 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(InvalidInputException.class)
 	public ResponseEntity<ErrorResponse> handleInvalidInput(InvalidInputException e) {
-		return new ResponseEntity(errorResponse(e), HttpStatus.BAD_REQUEST);
+		ErrorResponse error = new ErrorResponse();
+		error.code(String.valueOf(HttpStatus.BAD_REQUEST.value()));
+		error.message(e.getAttributeNames().get(0));
+		return ResponseEntity.badRequest().body(error);
 	}
 
 	@ExceptionHandler(SlotUnavailableException.class)
